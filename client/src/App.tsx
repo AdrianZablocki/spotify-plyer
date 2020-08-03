@@ -2,7 +2,7 @@ import React from 'react';
 
 function App():JSX.Element {
   return (
-    <div>test</div>
+    <div>App client test</div>
   );
 }
 

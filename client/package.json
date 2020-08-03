@@ -16,7 +16,7 @@
     "prettier": "prettier --ignore-path .gitignore \"**/*.+(js|ts|tsx|scss|yml|json)\"",
     "format": "npm run prettier --write",
     "find-duplicates": "npx jscpd ./src/**",
-    "pre-commit": "lint-staged"
+    "pre-commit": "lint-staged --no-stash"
   },
   "keywords": [],
   "author": "AppSynth",
