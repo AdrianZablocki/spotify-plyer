@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "downlevelIteration": true,
+    "noImplicitAny": true,
+    "esModuleInterop": true,
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "jsx": "react",
+    "emitDeclarationOnly": true,
+    "declaration": true,
+    "declarationDir": "./build",
+    "baseUrl": ".",
+    "paths": {
+      "src/*": ["src/*"]
+    }
+  },
+  "include": ["src"],
+  "exclude": ["src/**/*.test.tsx", "src/**/*.test.ts"]
+}

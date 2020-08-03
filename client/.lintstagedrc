@@ -1,0 +1,12 @@
+{
+  "*.{js,jsx,scss,yml,json,md}": [
+    "prettier --write"
+  ],
+  "*.{js,jsx}": [
+    "jest --findRelatedTests --passWithNoTests",
+    "eslint --fix"
+  ],
+  "*.scss": [
+    "stylelint --fix"
+  ]
+}
