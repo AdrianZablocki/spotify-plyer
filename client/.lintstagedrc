@@ -1,8 +1,8 @@
 {
-  "*.{js,jsx,scss,yml,json,md}": [
+  "*.{js,jsx.tsx,scss,yml,json,md}": [
     "prettier --write"
   ],
-  "*.{js,jsx}": [
+  "*.{js,jsx,tsx}": [
     "jest --findRelatedTests --passWithNoTests",
     "eslint --fix"
   ],
