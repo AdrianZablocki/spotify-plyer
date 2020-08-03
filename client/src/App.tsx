@@ -1,5 +1,6 @@
 import React, {useCallback, useState} from 'react';
 import Spotify from 'spotify-web-api-js';
+import createHttp from "src/api/http";
 
 const spotifyWebApi = new Spotify();
 
@@ -25,10 +26,12 @@ function App():JSX.Element {
   const isLogged = Boolean(params.access_token);
 
   if (isLogged) {
-    spotifyWebApi.setAccessToken(params.access_token);
-    spotifyWebApi.getUserPlaylists().then(({ items }) => {
-      setList(items);
-    });
+    const http = createHttp(params.access_token);
+    http.get("/playlists")
+            .then(res => {
+                console.log(res);
+              // setList(res.data.items);
+            })
   }
 
   return (
@@ -36,7 +39,7 @@ function App():JSX.Element {
       {
         isLogged ? (
           <div>
-            {list && list.map((item: any) => <div key={item.id}>{item.name}</div>)}
+            {/*{list && list.map((item: any) => <div key={item.id}>{item.name}</div>)}*/}
           </div>
         ) : <a href="http://localhost:8888"><button type="button">Login with spotify</button></a>
       }
