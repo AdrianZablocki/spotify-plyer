@@ -20,6 +20,8 @@ module.exports = {
     'implicit-arrow-linebreak': 0,
     'no-unused-vars': 0,
     'object-curly-newline': 0,
+    'no-undef': 0,
+    'import/extensions': 0,
     'linebreak-style': ['error', 'windows'], // when working on windows machine
   },
 };

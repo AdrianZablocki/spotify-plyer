@@ -16,7 +16,7 @@ function PlayListsContainer(): JSX.Element {
   }, []);
 
   return (
-    <div>
+    <div data-test="section-playlists">
       {isLoading && <div>spiner</div>}
       {hasError && <div>error message</div>}
       {response && (

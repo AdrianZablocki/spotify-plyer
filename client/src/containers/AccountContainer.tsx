@@ -16,12 +16,12 @@ function AccountContainer(): JSX.Element {
   }, [history]);
 
   return (
-    <div>
+    <div data-test="section-account">
       {isLoading && <div>spiner</div>}
       {hasError && <div>error message</div>}
       {response && (
-        <div>
-          <div>User: {response.display_name}</div>
+        <div data-test="section-account2">
+          <div className="huj">User: {response.display_name}</div>
           <div>Email: {response.email}</div>
           <div>Type: {response.product}</div>
           <button onClick={redirectToPlayLists} type="button">go to play lists</button>
