@@ -1,6 +1,8 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
+import PlayListItem from 'src/components/PlayListItem';
+import LoginContainer from 'src/containers/LoginContainer';
 import PlayListsContainer from 'src/containers/PlayListsContainer';
 import AccountContainer from 'src/containers/AccountContainer';
 import HttpContext from 'src/contexts/HttpContext';
@@ -11,9 +13,18 @@ function Routes({ accessToken }: { accessToken: string }): JSX.Element {
 
   return (
     <HttpContext.Provider value={http}>
+      {/*<Switch>*/}
+      {/*  <Route path="/account" component={AccountContainer} />*/}
+      {/*  <Route path="/lists" component={PlayListsContainer} />*/}
+      {/*  <Route path="/playlist/:id?" component={PlayListItem} />*/}
+      {/*</Switch>*/}
       <Switch>
+        <Route path="/" exact component={LoginContainer} />
         <Route path="/account" component={AccountContainer} />
-        <Route path="/lists" component={PlayListsContainer} />
+        <Route path="/lists" component={PlayListsContainer}>
+          {/*<Route path="/playlist/:id?" component={PlayListItem} />*/}
+        </Route>
+        <Route path="/playlist/:id?" component={PlayListItem} />
       </Switch>
     </HttpContext.Provider>
   );
