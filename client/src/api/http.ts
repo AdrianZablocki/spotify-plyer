@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 import axios, { AxiosInstance } from 'axios';
 
 import { API_BASE_URL } from 'src/config';

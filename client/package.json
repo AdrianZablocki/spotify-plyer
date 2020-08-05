@@ -23,6 +23,7 @@
   "license": "ISC",
   "dependencies": {
     "@babel/runtime": "7.10.4",
+    "@umijs/hooks": "^1.9.3",
     "axios": "0.19.2",
     "react": "16.13.1",
     "react-dom": "16.13.1",

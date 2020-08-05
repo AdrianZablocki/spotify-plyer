@@ -1,15 +1,29 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
-import HttpContext from 'src/contexts/HttpContext';
+import usePlayLists from 'src/hooks/use-playlists';
 
 function PlayListsContainer(): JSX.Element {
-  const http = useContext(HttpContext);
+  const history = useHistory();
+  const { isLoading, hasError, sendRequest, response } = usePlayLists();
+
+  const redirectToAccount = useCallback(() => {
+    history.push('/account');
+  }, [history]);
 
   useEffect(() => {
-    http.get('/playlists').then((res) => console.log(res));
+    sendRequest();
   }, []);
+
   return (
-    <div>play lists</div>
+    <div>
+      {isLoading && <div>spiner</div>}
+      {hasError && <div>error message</div>}
+      {response && (
+        response.items.map((item: any) => <div key={item.id}>{item.name}</div>)
+      )}
+      <button onClick={redirectToAccount} type="button">go to account</button>
+    </div>
   );
 }
 
