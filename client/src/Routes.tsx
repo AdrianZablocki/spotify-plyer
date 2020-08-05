@@ -13,17 +13,10 @@ function Routes({ accessToken }: { accessToken: string }): JSX.Element {
 
   return (
     <HttpContext.Provider value={http}>
-      {/*<Switch>*/}
-      {/*  <Route path="/account" component={AccountContainer} />*/}
-      {/*  <Route path="/lists" component={PlayListsContainer} />*/}
-      {/*  <Route path="/playlist/:id?" component={PlayListItem} />*/}
-      {/*</Switch>*/}
       <Switch>
         <Route path="/" exact component={LoginContainer} />
         <Route path="/account" component={AccountContainer} />
-        <Route path="/lists" component={PlayListsContainer}>
-          {/*<Route path="/playlist/:id?" component={PlayListItem} />*/}
-        </Route>
+        <Route path="/lists" component={PlayListsContainer} />
         <Route path="/playlist/:id?" component={PlayListItem} />
       </Switch>
     </HttpContext.Provider>

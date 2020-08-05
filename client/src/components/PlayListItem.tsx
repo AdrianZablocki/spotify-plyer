@@ -23,7 +23,7 @@ function PlayListItem(): JSX.Element {
       elementy listy
       {
         playlistResponse?.tracks.items.map(item => (
-          <audio controls>
+          <audio key={item.track.id} controls>
             <source src={item.track.preview_url} />
           </audio>
         ))
