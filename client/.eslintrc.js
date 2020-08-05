@@ -16,5 +16,7 @@ module.exports = {
   rules: {
     'react/jsx-filename-extension': [2, { extensions: ['.js', '.jsx', '.ts', '.tsx'] }],
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+    'import/no-unresolved': 0,
+    'linebreak-style': ['error', 'windows'], // when working on windows machine
   },
 };
