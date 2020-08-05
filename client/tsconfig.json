@@ -14,6 +14,6 @@
       "src/*": ["src/*"]
     }
   },
-  "include": ["src"],
+  "include": ["src", "typings/**/*"],
   "exclude": ["src/**/*.test.tsx", "src/**/*.test.ts"]
 }
