@@ -88,15 +88,10 @@ module.exports = () => ({
         ],
       },
       {
-        test: /\.(png|jpg|svg)$/,
-        exclude: /node_modules/,
+        test: /\.(gif|png|jpe?g|svg)$/,
         use: [
           {
-            loader: 'file-loader',
-            options: {
-              outputPath: resolve(__dirname, '..', 'media'),
-              name: '[name].[contenthash].[ext]',
-            },
+            loader: 'url-loader',
           },
         ],
       },
