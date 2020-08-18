@@ -22,6 +22,7 @@ module.exports = {
     'object-curly-newline': 0,
     'no-undef': 0,
     'import/extensions': 0,
+    'react/require-default-props': 0,
     'linebreak-style': ['error', 'windows'], // when working on windows machine
   },
 };

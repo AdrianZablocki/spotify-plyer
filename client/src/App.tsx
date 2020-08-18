@@ -7,10 +7,16 @@ import useAccessToken from 'src/hooks/use-access-token';
 import Routes from 'src/Routes';
 import BackgroundImage from 'src/assets/bg_image.jpg';
 
+const AppWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+`;
 const AppContainer = styled.main`
   position: relative;
-  height: 100vh;
-  max-width: 768px;
+  height: 568px;
+  width: 320px;
   margin: 0 auto;
   background: transparent;
 `;
@@ -44,14 +50,16 @@ function App():JSX.Element {
   const { accessToken, isAuthorized } = useAccessToken();
 
   return (
-    <AppContainer>
-      <Background />
-      {!isAuthorized ? <LoginContainer /> : (
-        <Router>
-          <Routes accessToken={accessToken} />
-        </Router>
-      )}
-    </AppContainer>
+    <AppWrapper>
+      <AppContainer>
+        <Background />
+        {!isAuthorized ? <LoginContainer /> : (
+          <Router>
+            <Routes accessToken={accessToken} />
+          </Router>
+        )}
+      </AppContainer>
+    </AppWrapper>
   );
 }
 
