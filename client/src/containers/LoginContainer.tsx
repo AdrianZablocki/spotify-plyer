@@ -6,15 +6,16 @@ import ButtonPrimary from 'src/components/ButtonPrimary';
 const LoginContainerWrapper = styled.div`
  display: flex;
  flex-direction: column;
- justify-content: center;
+ justify-content: flex-end;
  align-items: center;
- width: 100%;
- height: 100%;
+ height: 100vh;
+ padding-bottom: 170px;
+ box-sizing: border-box;
 `;
 
 const Header = styled.h1`
   color: #FFF;
-  margin: 50px 0 0;
+  margin: 0 0 100px;
   text-align: center;
   font-weight: 400;
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
@@ -22,12 +23,10 @@ const Header = styled.h1`
 
 function LoginContainer(): JSX.Element {
   return (
-    <>
+    <LoginContainerWrapper>
       <Header>Spotify list player</Header>
-      <LoginContainerWrapper>
-        <ButtonPrimary content="Login with Spotify" href="http://localhost:8888" />
-      </LoginContainerWrapper>
-    </>
+      <ButtonPrimary content="Login with Spotify" href="http://localhost:8888" />
+    </LoginContainerWrapper>
   );
 }
 

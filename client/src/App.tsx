@@ -15,8 +15,8 @@ const AppWrapper = styled.div`
 `;
 const AppContainer = styled.main`
   position: relative;
-  height: 568px;
-  width: 320px;
+  height: 100%;
+  width: 100%;
   margin: 0 auto;
   background: transparent;
 `;
