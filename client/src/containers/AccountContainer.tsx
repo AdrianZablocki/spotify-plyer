@@ -12,7 +12,7 @@ const AccountContainerWrapper = styled.div`
  align-items: center;
  width: 100%;
  height: 100%;
- padding-bottom: 50px;
+ padding-bottom: 180px;
  box-sizing: border-box;
 `;
 
