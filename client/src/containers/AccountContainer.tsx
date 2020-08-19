@@ -26,7 +26,6 @@ const UserWrapper = styled.div`
 const User = styled.div`
   margin-bottom: 50px;
   color: #FFF;
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   letter-spacing: .5px;
   text-align: center;
 `;

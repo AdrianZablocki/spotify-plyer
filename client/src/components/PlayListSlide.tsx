@@ -18,9 +18,10 @@ function PlayListSlide({ playlist }: { playlist: any }): JSX.Element {
   const history = useHistory();
 
   const redirectToPlaylist = useCallback((id: string) => {
-    history.push(`/playlist/${id}`, {
+    history.push(`/lists/${id}`, {
       id,
     });
+    console.log('redirect to playlist');
   }, []);
 
   return (

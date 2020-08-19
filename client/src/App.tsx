@@ -1,11 +1,13 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import styled from '@emotion/styled';
+import { Global } from '@emotion/core';
 
 import LoginContainer from 'src/containers/LoginContainer';
 import useAccessToken from 'src/hooks/use-access-token';
 import Routes from 'src/Routes';
 import BackgroundImage from 'src/assets/bg_image.jpg';
+import globalStyles from 'src/Theme/global-styles';
 
 const AppWrapper = styled.div`
   display: flex;
@@ -20,7 +22,6 @@ const AppContainer = styled.main`
   margin: 0 auto;
   background: transparent;
 `;
-
 const Background = styled.div`
   position: absolute;
   top: 0;
@@ -40,7 +41,16 @@ const Background = styled.div`
     width: 100%;
     height: 100%;
     background: rgb(0,0,0);
-    background: linear-gradient(0deg, rgba(0, 0, 0, 1) 30%, rgba(0, 0, 0, 0.9) 40%, rgba(0, 0, 0, 0.8) 50%, rgba(0, 0, 0, 0.7) 60%, rgba(0, 0, 0, 0.6) 70%, rgba(0, 0, 0, 0.5) 80%, rgba(0, 0, 0, 0.5) 100%);
+    background: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 1) 30%,
+      rgba(0, 0, 0, 0.9) 40%,
+      rgba(0, 0, 0, 0.8) 50%,
+      rgba(0, 0, 0, 0.7) 60%,
+      rgba(0, 0, 0, 0.6) 70%,
+      rgba(0, 0, 0, 0.5) 80%,
+      rgba(0, 0, 0, 0.5) 100%
+    );
     z-index: -1;
   }
 `;
@@ -58,6 +68,7 @@ function App():JSX.Element {
           </Router>
         )}
       </AppContainer>
+      <Global styles={globalStyles} />
     </AppWrapper>
   );
 }

@@ -15,7 +15,6 @@ const LoginContainerWrapper = styled.div`
 const Header = styled.h1`
   text-align: center;
   font-weight: 400;
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 22px;
   color: #0FD55A;
   margin-bottom: 10px;
@@ -23,7 +22,6 @@ const Header = styled.h1`
 `;
 const Subheader = styled.div`
   margin-bottom: 50px;
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 16px;
   color: #626262;
 `;
