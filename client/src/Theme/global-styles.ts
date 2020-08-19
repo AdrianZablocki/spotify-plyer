@@ -11,7 +11,6 @@ export default css`
     padding: 0;
     font-family: ${fontFamily};
     margin: 0;
-    overflow-y: scroll;
   }
 
   *,

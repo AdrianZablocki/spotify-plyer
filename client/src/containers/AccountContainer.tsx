@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 import React, { useCallback, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import ButtonPrimary from 'src/components/ButtonPrimary';
 
+import ButtonPrimary from 'src/components/ButtonPrimary';
 import useUser from 'src/hooks/use-user';
 
 const AccountContainerWrapper = styled.div`

@@ -12,7 +12,7 @@ import globalStyles from 'src/Theme/global-styles';
 const AppWrapper = styled.div`
   display: flex;
   align-items: center;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
 `;
 const AppContainer = styled.main`
