@@ -5,18 +5,18 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 
 import App from 'src/App';
-import playListsReducer from 'src/store/reducers/playLists';
+import playerReducer from 'src/store/reducers/player';
 
 declare global {
   interface Window {
-    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? : typeof compose;
   }
 }
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
-  playLists: playListsReducer,
+  player: playerReducer,
 });
 
 const store = createStore(rootReducer, composeEnhancers(

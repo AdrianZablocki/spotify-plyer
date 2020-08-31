@@ -48,11 +48,7 @@ function Track({ item, index }: { item: any, index?: number }): JSX.Element {
             .
           </TrackIndex>
           <TrackName>
-            Sample of
-            {' '}
-            {item.track.track_number}
-            {' '}
-            track
+            {item.track.name}
           </TrackName>
         </TrackDetails>
         <TrackDetails>{convertDuration(item.track.duration_ms)}</TrackDetails>

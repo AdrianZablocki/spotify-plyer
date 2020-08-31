@@ -1,3 +1,4 @@
 export {
-  fetchPlayLists,
-} from './playlists';
+  fetchTracks,
+  fetchTracksFail,
+} from './player';

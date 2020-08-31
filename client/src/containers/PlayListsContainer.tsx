@@ -7,8 +7,9 @@ import PlayListCarousel from 'src/components/PlayListCarousel';
 import HttpContext from 'src/contexts/HttpContext';
 import usePlayLists from 'src/hooks/use-playlists';
 import * as actions from 'src/store/actions/index';
+import Track from 'src/interfaces/track';
 
-function PlayListsContainer({ test, test2}): JSX.Element {
+function PlayListsContainer({ tracks, fetchTracks }: { tracks: Track[], fetchTracks: Function }): JSX.Element {
   const history = useHistory();
   const http = useContext(HttpContext);
   const { isLoading, hasError, sendRequest, response } = usePlayLists();
@@ -21,23 +22,21 @@ function PlayListsContainer({ test, test2}): JSX.Element {
     sendRequest();
   }, []);
 
-  console.log('http', http);
   return (
     <div data-test="section-playlists">
       {isLoading && <div>spiner</div>}
       {hasError && <div>error message</div>}
       {response && <PlayListCarousel playLists={response.items} />}
-      <button type="button" onClick={() => test2('7beu9pGygblSZAlTuFbBhC', http)}>click</button>
+      <button type="button" onClick={() => fetchTracks('7beu9pGygblSZAlTuFbBhC', http)}>click</button>
     </div>
   );
 }
 
 const mapStateToProps = (state: any) => ({
-  test: state.playLists,
+  tracks: state.player.tracks,
 });
 const mapDispatchToProps = (dispatch: any) => ({
-  test2: (id: string, http: AxiosInstance) => dispatch(actions.fetchPlayLists(id, http)),
+  fetchTracks: (id: string, http: AxiosInstance) => dispatch(actions.fetchTracks(id, http)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PlayListsContainer);
-//7beu9pGygblSZAlTuFbBhC

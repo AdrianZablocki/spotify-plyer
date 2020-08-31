@@ -4,7 +4,6 @@ import { useLocation } from 'react-router-dom';
 import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
-import ButtonPrimary from 'src/components/ButtonPrimary';
 import Track from 'src/components/Track';
 import usePlayList from 'src/hooks/use-playlist';
 
@@ -97,7 +96,7 @@ function TrackListModal(): JSX.Element {
               <ChevronLeftIcon style={chevronIconStyles} onClick={() => toggleTracksList(false)} />
             </CurrentTruck>
           )}
-          {/*<ButtonPrimary click={() => toggleTracksList(false)} content="close" />*/}
+          {/* <ButtonPrimary click={() => toggleTracksList(false)} content="close" /> */}
           <TrackItemsWrapper>
             {
               playlistResponse?.tracks.items.map((item: any, index: number) => (
