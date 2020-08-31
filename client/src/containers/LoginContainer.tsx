@@ -9,7 +9,7 @@ const LoginContainerWrapper = styled.div`
  justify-content: flex-end;
  align-items: center;
  height: 100vh;
- padding-bottom: 180px;
+ padding-bottom: 70px;
  box-sizing: border-box;
 `;
 const Header = styled.h1`
@@ -29,9 +29,9 @@ const Subheader = styled.div`
 function LoginContainer(): JSX.Element {
   return (
     <LoginContainerWrapper>
-      <Header>Spotify list player</Header>
-      <Subheader>Spotify list player</Subheader>
-      <ButtonPrimary content="Login with Spotify" href="http://localhost:8888" />
+      <Header>Spotify player</Header>
+      <Subheader>Spotify player</Subheader>
+      <ButtonPrimary content="Login" href="http://localhost:8888" />
     </LoginContainerWrapper>
   );
 }

@@ -14,6 +14,7 @@ const AppWrapper = styled.div`
   align-items: center;
   width: 100%;
   height: 100vh;
+  overflow: hidden;
 `;
 const AppContainer = styled.main`
   position: relative;
@@ -28,7 +29,7 @@ const Background = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background: url(${BackgroundImage}) no-repeat #000 50% 50%;
+  background: url(${BackgroundImage}) no-repeat #1B1B1B 50% 50%;
   background-size: cover;
   z-index: -1;
 
@@ -43,13 +44,13 @@ const Background = styled.div`
     background: rgb(0,0,0);
     background: linear-gradient(
       0deg,
-      rgba(0, 0, 0, 1) 30%,
-      rgba(0, 0, 0, 0.9) 40%,
-      rgba(0, 0, 0, 0.8) 50%,
-      rgba(0, 0, 0, 0.7) 60%,
-      rgba(0, 0, 0, 0.6) 70%,
-      rgba(0, 0, 0, 0.5) 80%,
-      rgba(0, 0, 0, 0.5) 100%
+      rgba(27, 27, 27, 1) 30%,
+      rgba(27, 27, 27, 0.9) 40%,
+      rgba(27, 27, 27, 0.8) 50%,
+      rgba(27, 27, 27, 0.7) 60%,
+      rgba(27, 27, 27, 0.6) 70%,
+      rgba(27, 27, 27, 0.5) 80%,
+      rgba(27, 27, 27, 0.5) 100%
     );
     z-index: -1;
   }

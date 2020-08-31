@@ -1,8 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import ButtonPrimary from 'src/components/ButtonPrimary';
 
-import PlayListItem from 'src/components/PlayListItem';
+import TrackListModal from 'src/components/TrackListModal';
 import LoginContainer from 'src/containers/LoginContainer';
 import PlayListsContainer from 'src/containers/PlayListsContainer';
 import AccountContainer from 'src/containers/AccountContainer';
@@ -17,12 +16,10 @@ function Routes({ accessToken }: { accessToken: string }): JSX.Element {
       <Switch>
         <Route path="/" exact component={LoginContainer} />
         <Route path="/account" component={AccountContainer} />
-        <Route path="/lists" component={PlayListsContainer} />
-        <Route path="/playlist/:id?" component={PlayListItem} />
-        {/*<Route path="/lists">*/}
-        {/*  <PlayListsContainer />*/}
-        {/*  <Route path="/lists/:id" component={PlayListItem} />*/}
-        {/*</Route>*/}
+        <Route path="/lists">
+          <PlayListsContainer />
+          <Route path="/lists/:id" component={TrackListModal} />
+        </Route>
       </Switch>
     </HttpContext.Provider>
   );

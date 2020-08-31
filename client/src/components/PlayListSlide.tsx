@@ -18,10 +18,10 @@ function PlayListSlide({ playlist }: { playlist: any }): JSX.Element {
   const history = useHistory();
 
   const redirectToPlaylist = useCallback((id: string) => {
-    history.push(`/playlist/${id}`, {
+    history.push(`/lists/${id}`, {
       id,
     });
-  }, []);
+  }, [history]);
 
   return (
     <>
@@ -29,7 +29,7 @@ function PlayListSlide({ playlist }: { playlist: any }): JSX.Element {
         alt={playlist.id}
         src={playlist.images[0].url}
         onClick={() => redirectToPlaylist(playlist.id)}
-        style={{ maxHeight: 350, maxWidth: 350, borderRadius: '50%', margin: '0 auto', display: 'block' }}
+        style={{ height: 200, width: 200, borderRadius: '50%', margin: '0 auto', display: 'block' }}
       />
       <h2>{playlist.name}</h2>
       <h3>{playlist.owner.display_name}</h3>
