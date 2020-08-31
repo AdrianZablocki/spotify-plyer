@@ -9,13 +9,12 @@ const LoginContainerWrapper = styled.div`
  justify-content: flex-end;
  align-items: center;
  height: 100vh;
- padding-bottom: 180px;
+ padding-bottom: 70px;
  box-sizing: border-box;
 `;
 const Header = styled.h1`
   text-align: center;
   font-weight: 400;
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 22px;
   color: #0FD55A;
   margin-bottom: 10px;
@@ -23,7 +22,6 @@ const Header = styled.h1`
 `;
 const Subheader = styled.div`
   margin-bottom: 50px;
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 16px;
   color: #626262;
 `;
@@ -31,9 +29,9 @@ const Subheader = styled.div`
 function LoginContainer(): JSX.Element {
   return (
     <LoginContainerWrapper>
-      <Header>Spotify list player</Header>
-      <Subheader>Spotify list player</Subheader>
-      <ButtonPrimary content="Login with Spotify" href="http://localhost:8888" />
+      <Header>Spotify player</Header>
+      <Subheader>Spotify player</Subheader>
+      <ButtonPrimary content="Login" href="http://localhost:8888" />
     </LoginContainerWrapper>
   );
 }

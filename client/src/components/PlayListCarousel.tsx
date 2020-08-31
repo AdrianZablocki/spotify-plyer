@@ -5,7 +5,7 @@ import PlayListSlide from 'src/components/PlayListSlide';
 
 function PlayListCarousel({ playLists }: { playLists: any }): JSX.Element {
   return (
-    <div data-test="section-playListCarousel">
+    <div data-test="section-playListCarousel" style={{ marginTop: '100px' }}>
       <Carousel cellAlign="center" cellSpacing={20}>
         {playLists.map((item: any) => <PlayListSlide key={item.id} playlist={item} />)}
       </Carousel>

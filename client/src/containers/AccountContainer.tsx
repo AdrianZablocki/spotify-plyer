@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 import React, { useCallback, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import ButtonPrimary from 'src/components/ButtonPrimary';
 
+import ButtonPrimary from 'src/components/ButtonPrimary';
 import useUser from 'src/hooks/use-user';
 
 const AccountContainerWrapper = styled.div`
@@ -12,7 +12,7 @@ const AccountContainerWrapper = styled.div`
  align-items: center;
  width: 100%;
  height: 100%;
- padding-bottom: 180px;
+ padding-bottom: 70px;
  box-sizing: border-box;
 `;
 
@@ -26,7 +26,6 @@ const UserWrapper = styled.div`
 const User = styled.div`
   margin-bottom: 50px;
   color: #FFF;
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   letter-spacing: .5px;
   text-align: center;
 `;
