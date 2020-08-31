@@ -1,6 +1,10 @@
-import React, { useCallback } from 'react';
+import React, {useCallback, useContext} from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from '@emotion/styled';
+import {AxiosInstance} from 'axios';
+import * as actions from 'src/store/actions';
+import {connect} from 'react-redux';
+import HttpContext from 'src/contexts/HttpContext';
 
 const Slide = styled.div`
   margin-bottom: 50px;
@@ -14,10 +18,12 @@ const Image = styled.img`
   display: block;
 `;
 
-function PlayListSlide({ playlist }: { playlist: any }): JSX.Element {
+function PlayListSlide({ playlist, fetchTracks }: { playlist: any, fetchTracks: Function }): JSX.Element {
   const history = useHistory();
+  const http = useContext(HttpContext);
 
   const redirectToPlaylist = useCallback((id: string) => {
+    fetchTracks(playlist.id, http)
     history.push(`/lists/${id}`, {
       id,
     });
@@ -36,5 +42,8 @@ function PlayListSlide({ playlist }: { playlist: any }): JSX.Element {
     </>
   );
 }
+const mapDispatchToProps = (dispatch: any) => ({
+  fetchTracks: (id: string, http: AxiosInstance) => dispatch(actions.fetchTracks(id, http)),
+});
 
-export default PlayListSlide;
+export default connect(null, mapDispatchToProps)(PlayListSlide);
