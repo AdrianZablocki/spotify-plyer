@@ -1,4 +1,5 @@
 import { AxiosInstance, AxiosResponse } from 'axios';
+import ITrack from 'src/interfaces/ITrack';
 import * as actionTypes from 'src/store/actions/actionTypes';
 
 export const fetchTracksStart = () => ({
@@ -24,6 +25,7 @@ export const fetchTracks = (id: string, http: AxiosInstance) => (dispatch: any) 
         name: track.track.name,
         href: track.track.preview_url,
         number: track.track.track_number,
+        id: track.track.id,
       }))
       dispatch(fetchTracksSuccess(tracks));
     })
@@ -31,3 +33,13 @@ export const fetchTracks = (id: string, http: AxiosInstance) => (dispatch: any) 
       dispatch(fetchTracksFail(error))
     });
 };
+
+export const chooseTrack = (track: ITrack, index: number) => ({
+  type: actionTypes.CHOOSE_TRACK,
+  currentTrack: track,
+  currentTrackIndex: index,
+});
+
+export const playNextTrack = () => ({
+  type: actionTypes.PLAY_NEXT_TRACK,
+});

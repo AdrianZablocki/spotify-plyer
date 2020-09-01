@@ -1,14 +1,11 @@
-import React, {useCallback, useContext} from 'react';
+import React, { useCallback, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from '@emotion/styled';
-import {AxiosInstance} from 'axios';
-import * as actions from 'src/store/actions';
-import {connect} from 'react-redux';
-import HttpContext from 'src/contexts/HttpContext';
+import { AxiosInstance } from 'axios';
+import { connect } from 'react-redux';
 
-const Slide = styled.div`
-  margin-bottom: 50px;
-`;
+import HttpContext from 'src/contexts/HttpContext';
+import * as actions from 'src/store/actions';
 
 const Image = styled.img`
   height: 350px;
@@ -18,7 +15,12 @@ const Image = styled.img`
   display: block;
 `;
 
-function PlayListSlide({ playlist, fetchTracks }: { playlist: any, fetchTracks: Function }): JSX.Element {
+interface Properties {
+  playlist: any;
+  fetchTracks: Function;
+}
+
+function PlayListSlide({ playlist, fetchTracks }: Properties): JSX.Element {
   const history = useHistory();
   const http = useContext(HttpContext);
 

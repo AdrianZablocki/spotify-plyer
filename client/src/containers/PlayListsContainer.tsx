@@ -1,22 +1,13 @@
-import { AxiosInstance } from 'axios';
-import React, { useCallback, useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import Player from 'src/components/Player';
 
 import PlayListCarousel from 'src/components/PlayListCarousel';
-import HttpContext from 'src/contexts/HttpContext';
 import usePlayLists from 'src/hooks/use-playlists';
-import * as actions from 'src/store/actions/index';
-import Track from 'src/interfaces/track';
+import ITrack from 'src/interfaces/ITrack';
 
-function PlayListsContainer({ tracks, fetchTracks }: { tracks: Track[], fetchTracks: Function }): JSX.Element {
-  const history = useHistory();
-  const http = useContext(HttpContext);
+function PlayListsContainer({ currentTrack }: { currentTrack: ITrack}): JSX.Element {
   const { isLoading, hasError, sendRequest, response } = usePlayLists();
-
-  const redirectToAccount = useCallback(() => {
-    history.push('/account');
-  }, [history]);
 
   useEffect(() => {
     sendRequest();
@@ -24,19 +15,16 @@ function PlayListsContainer({ tracks, fetchTracks }: { tracks: Track[], fetchTra
 
   return (
     <div data-test="section-playlists">
-      {isLoading && <div>spiner</div>}
+      {isLoading && <div>spinner</div>}
       {hasError && <div>error message</div>}
       {response && <PlayListCarousel playLists={response.items} />}
-      <button type="button" onClick={() => fetchTracks('7beu9pGygblSZAlTuFbBhC', http)}>click</button>
+      <Player currentTrack={currentTrack} />
     </div>
   );
 }
 
 const mapStateToProps = (state: any) => ({
-  tracks: state.player.tracks,
-});
-const mapDispatchToProps = (dispatch: any) => ({
-  fetchTracks: (id: string, http: AxiosInstance) => dispatch(actions.fetchTracks(id, http)),
+  currentTrack: state.player.currentTrack,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(PlayListsContainer);
+export default connect(mapStateToProps, null)(PlayListsContainer);

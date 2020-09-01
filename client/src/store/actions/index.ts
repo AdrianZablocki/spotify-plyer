@@ -1,4 +1,5 @@
 export {
   fetchTracks,
-  fetchTracksFail,
+  chooseTrack,
+  playNextTrack,
 } from './player';

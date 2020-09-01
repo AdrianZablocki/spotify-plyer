@@ -1,16 +1,20 @@
 import styled from '@emotion/styled';
-import React, { useCallback, useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useCallback, useState } from 'react';
+import { connect } from 'react-redux';
 import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
 import Track from 'src/components/Track';
-import usePlayList from 'src/hooks/use-playlist';
+import ITrack from 'src/interfaces/ITrack';
+import * as actions from 'src/store/actions';
+
+const currentTrackHeight = '80px';
+const listTriggerHeight = '69px';
 
 const TrackListWrapper = styled.div`
   width: 100%;
   height: 100vh;
-  overflow: scroll;
+  overflow: hidden;
   position: absolute;
   left: 0;
   transition: all 300ms ease;
@@ -31,21 +35,19 @@ const Label = styled.div`
   text-transform: uppercase;
 `;
 const CurrentTruck = styled.div`
+  max-height: ${currentTrackHeight};
   padding: 15px;
   background: rgba(0, 0, 0, .5);
 `;
 const TrackItemsWrapper = styled.div`
-  height: 100%;
+  height: calc(100vh - ${currentTrackHeight});
   background: #FFF;
+  overflow: scroll;
 `;
-
 const close = {
-  top: 'calc(100% - 69px)',
-  overflow: 'hidden',
+  top: `calc(100% - ${listTriggerHeight})`,
 };
 const open = {
-  height: '100vh',
-  overflow: 'scroll',
   top: 0,
 };
 const iconListStyle = {
@@ -59,55 +61,58 @@ const chevronIconStyles = {
   fill: '#0FD55A',
 };
 
-function TrackListModal(): JSX.Element {
-  const { state } = useLocation<{ id: string }>();
-  const [isOpen, setOpen] = useState(false);
-  const {
-    isPlaylistLoading,
-    hasErrorPlaylist,
-    playlistRequest,
-    playlistResponse,
-  } = usePlayList({ id: state?.id });
+interface Properties {
+  tracks: ITrack[];
+  chooseTrack: Function;
+  nextTrack: ITrack;
+}
 
-  useEffect(() => {
-    playlistRequest();
-  }, [state]);
+function TrackListModal({ tracks, chooseTrack, nextTrack }: Properties): JSX.Element {
+  const [isOpen, setOpen] = useState(false);
 
   const toggleTracksList = useCallback((value: boolean) => {
     setOpen(value);
   }, [setOpen]);
 
+  const onChooseTrack = useCallback((item, index) => {
+    chooseTrack(item, index);
+    setOpen(false);
+  }, []);
+
   return (
     <TrackListWrapper style={isOpen ? open : close} data-test="section-playListItem">
-      {isPlaylistLoading && <div>spiner</div>}
-      {hasErrorPlaylist && <div>error message</div>}
-      {playlistResponse && !isPlaylistLoading && (
-        <>
-          {!isOpen ? (
-            <ListTrigger onClick={() => toggleTracksList(true)}>
-              <FormatListBulletedIcon style={iconListStyle} />
-              <NextTrack>
-                <Label>Next</Label>
-                <div style={{ paddingLeft: '20px' }}>track duration etc</div>
-              </NextTrack>
-            </ListTrigger>
-          ) : (
-            <CurrentTruck>
-              <ChevronLeftIcon style={chevronIconStyles} onClick={() => toggleTracksList(false)} />
-            </CurrentTruck>
-          )}
-          {/* <ButtonPrimary click={() => toggleTracksList(false)} content="close" /> */}
-          <TrackItemsWrapper>
-            {
-              playlistResponse?.tracks.items.map((item: any, index: number) => (
-                <Track key={item.track.id} item={item} index={index} />
-              ))
-            }
-          </TrackItemsWrapper>
-        </>
-      )}
+      <>
+        {!isOpen ? (
+          <ListTrigger onClick={() => toggleTracksList(true)}>
+            <FormatListBulletedIcon style={iconListStyle} />
+            <NextTrack>
+              <Label>Next</Label>
+              <div style={{ paddingLeft: '20px' }}>{nextTrack?.name}</div>
+            </NextTrack>
+          </ListTrigger>
+        ) : (
+          <CurrentTruck onClick={() => toggleTracksList(false)}>
+            <ChevronLeftIcon style={chevronIconStyles} />
+          </CurrentTruck>
+        )}
+        <TrackItemsWrapper>
+          {tracks.map((item: any, index: number) =>
+            <Track key={item.id} click={() => onChooseTrack(item, index)} item={item} />)}
+        </TrackItemsWrapper>
+      </>
     </TrackListWrapper>
   );
 }
 
-export default TrackListModal;
+const mapStateToProps = (state: any) => ({
+  tracks: state.player.tracks,
+  isLoading: state.player.isLoading,
+  nextTrack: state.player.nextTrack,
+});
+
+const mapDispatchToProps = (dispatch: any) => ({
+  chooseTrack: (track: ITrack, index: number) =>
+    dispatch(actions.chooseTrack(track, index)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(TrackListModal);
