@@ -1,7 +1,8 @@
-import React, { MouseEventHandler, useCallback } from 'react';
+import React, { MouseEventHandler } from 'react';
 import styled from '@emotion/styled';
 
 import ITrack from 'src/interfaces/ITrack';
+import durationConverter from 'src/utility/duration-converter';
 
 const TrackItemWrapper = styled.div`
   padding: 10px 20px;
@@ -22,15 +23,18 @@ const TrackIndex = styled.span`
   float:left
 `;
 const TrackName = styled.span`
+  max-width: 180px;
   color: #1F1F1F;
-  float:left
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 const TrackDetails = styled.div`
   position: relative;
   display: flex;
   padding: 0 5px;
   align-items: flex-end;
-  bottom: -6px;
+  bottom: -5px;
   background: #fff;
 `;
 
@@ -39,23 +43,18 @@ const dot = '.';
 interface Properties {
   item: ITrack;
   click: MouseEventHandler;
+  index: number;
 }
 
-function Track({ item, click }: Properties): JSX.Element {
-  const convertDuration = useCallback((millis): string => {
-    const minutes: number = Math.floor(millis / 60000);
-    const seconds: string = ((millis % 60000) / 1000).toFixed(0).padStart(2, '0');
-    return `${minutes}:${seconds}`;
-  }, []);
-
+function Track({ item, click, index }: Properties): JSX.Element {
   return (
     <TrackItemWrapper onClick={click}>
       <TrackItem>
         <TrackDetails>
-          <TrackIndex>{item.number}{dot}</TrackIndex>
+          <TrackIndex>{index}{dot}</TrackIndex>
           <TrackName>{item.name}</TrackName>
         </TrackDetails>
-        <TrackDetails>{convertDuration(item.duration)}</TrackDetails>
+        <TrackDetails>{durationConverter(item.duration)}</TrackDetails>
       </TrackItem>
     </TrackItemWrapper>
   );

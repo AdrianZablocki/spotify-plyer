@@ -20,12 +20,13 @@ export const fetchTracks = (id: string, http: AxiosInstance) => (dispatch: any) 
   dispatch(fetchTracksStart());
   http.get(`/playlists/${id}`)
     .then((response: AxiosResponse<any>) => {
-      const tracks = response.data.tracks.items.map((track: any) => ({
-        duration: track.track.duration_ms,
-        name: track.track.name,
-        href: track.track.preview_url,
-        number: track.track.track_number,
-        id: track.track.id,
+      const tracks = response.data.tracks.items.map((item: any) => ({
+        duration: item.track.duration_ms,
+        name: item.track.name,
+        href: item.track.preview_url,
+        number: item.track.track_number,
+        id: item.track.id,
+        artist: item.track.album.artists[0].name,
       }))
       dispatch(fetchTracksSuccess(tracks));
     })
