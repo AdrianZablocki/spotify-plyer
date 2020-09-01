@@ -19,6 +19,7 @@ const NextTrack = styled.div`
   margin-left: 20px;
 `;
 const Label = styled.div`
+  margin-bottom: -6px;
   color: #626262;
   font-size: 10px;
   text-transform: uppercase;
@@ -28,7 +29,7 @@ const TrackName = styled.div`
   max-width: 150px;
   position: relative;
   padding-right: 5px;
-  bottom: -4px;
+  bottom: -5px;
   font-size: 14px;
   line-height: 18px;
   background: #FFF;   
@@ -47,7 +48,7 @@ const TrackInfo = styled.div`
 const Duration = styled.div`
   position: relative;
   padding-left: 5px;
-  bottom: -4px;
+  bottom: -5px;
   color: #626262;
   background: #FFF; 
 `;

@@ -43,14 +43,15 @@ const dot = '.';
 interface Properties {
   item: ITrack;
   click: MouseEventHandler;
+  index: number;
 }
 
-function Track({ item, click }: Properties): JSX.Element {
+function Track({ item, click, index }: Properties): JSX.Element {
   return (
     <TrackItemWrapper onClick={click}>
       <TrackItem>
         <TrackDetails>
-          <TrackIndex>{item.number}{dot}</TrackIndex>
+          <TrackIndex>{index}{dot}</TrackIndex>
           <TrackName>{item.name}</TrackName>
         </TrackDetails>
         <TrackDetails>{durationConverter(item.duration)}</TrackDetails>

@@ -60,7 +60,7 @@ function TrackListModal({ tracks, chooseTrack, nextTrack, currentTrack }: Proper
         )}
         <TrackItemsWrapper>
           {tracks.map((item: any, index: number) =>
-            <Track key={item.id} click={() => onChooseTrack(item, index)} item={item} />)}
+            <Track key={item.id} click={() => onChooseTrack(item, index)} item={item} index={index + 1} />)}
         </TrackItemsWrapper>
       </>
     </TrackListWrapper>
