@@ -23,6 +23,10 @@ module.exports = {
     'no-undef': 0,
     'import/extensions': 0,
     'react/require-default-props': 0,
+    'react/jsx-one-expression-per-line': 0,
+    'jsx-a11y/media-has-caption': 0,
+    semi: 0,
+    camelcase: 0,
     'linebreak-style': ['error', 'windows'], // when working on windows machine
   },
 };

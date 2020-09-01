@@ -1,8 +1,33 @@
 import React from 'react';
 import { render } from 'react-dom';
+import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
+import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
 
-// eslint-disable-next-line import/no-unresolved
 import App from 'src/App';
+import playerReducer from 'src/store/reducers/player';
+
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? : typeof compose;
+  }
+}
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const rootReducer = combineReducers({
+  player: playerReducer,
+});
+
+const store = createStore(rootReducer, composeEnhancers(
+  applyMiddleware(thunk),
+));
+
+const app = (
+  <Provider store={store}>
+    <App />
+  </Provider>
+);
 
 const bootstrap = () => {
   const rootId = 'sp-root';
@@ -13,7 +38,7 @@ const bootstrap = () => {
   document.body.appendChild(root);
 
   // eslint-disable-next-line react/jsx-filename-extension
-  render(<App />, document.getElementById(rootId));
+  render(app, document.getElementById(rootId));
 };
 
 const startSpotifyPlayer = () => {

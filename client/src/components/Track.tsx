@@ -1,5 +1,7 @@
+import React, { MouseEventHandler, useCallback } from 'react';
 import styled from '@emotion/styled';
-import React, { useCallback } from 'react';
+
+import ITrack from 'src/interfaces/ITrack';
 
 const TrackItemWrapper = styled.div`
   padding: 10px 20px;
@@ -32,7 +34,14 @@ const TrackDetails = styled.div`
   background: #fff;
 `;
 
-function Track({ item, index }: { item: any, index?: number }): JSX.Element {
+const dot = '.';
+
+interface Properties {
+  item: ITrack;
+  click: MouseEventHandler;
+}
+
+function Track({ item, click }: Properties): JSX.Element {
   const convertDuration = useCallback((millis): string => {
     const minutes: number = Math.floor(millis / 60000);
     const seconds: string = ((millis % 60000) / 1000).toFixed(0).padStart(2, '0');
@@ -40,22 +49,13 @@ function Track({ item, index }: { item: any, index?: number }): JSX.Element {
   }, []);
 
   return (
-    <TrackItemWrapper>
+    <TrackItemWrapper onClick={click}>
       <TrackItem>
         <TrackDetails>
-          <TrackIndex>
-            {index + 1}
-            .
-          </TrackIndex>
-          <TrackName>
-            Sample of
-            {' '}
-            {item.track.track_number}
-            {' '}
-            track
-          </TrackName>
+          <TrackIndex>{item.number}{dot}</TrackIndex>
+          <TrackName>{item.name}</TrackName>
         </TrackDetails>
-        <TrackDetails>{convertDuration(item.track.duration_ms)}</TrackDetails>
+        <TrackDetails>{convertDuration(item.duration)}</TrackDetails>
       </TrackItem>
     </TrackItemWrapper>
   );

@@ -1,16 +1,15 @@
-import React, { useCallback, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { useLocation } from 'react-router';
+import Player from 'src/components/Player';
 
 import PlayListCarousel from 'src/components/PlayListCarousel';
 import usePlayLists from 'src/hooks/use-playlists';
+import ITrack from 'src/interfaces/ITrack';
 
-function PlayListsContainer(): JSX.Element {
-  const history = useHistory();
+function PlayListsContainer({ currentTrack }: { currentTrack: ITrack}): JSX.Element {
   const { isLoading, hasError, sendRequest, response } = usePlayLists();
-
-  const redirectToAccount = useCallback(() => {
-    history.push('/account');
-  }, [history]);
+  const { state } = useLocation<{ id: string }>();
 
   useEffect(() => {
     sendRequest();
@@ -18,11 +17,16 @@ function PlayListsContainer(): JSX.Element {
 
   return (
     <div data-test="section-playlists">
-      {isLoading && <div>spiner</div>}
+      {isLoading && <div>spinner</div>}
       {hasError && <div>error message</div>}
       {response && <PlayListCarousel playLists={response.items} />}
+      {state?.id && <Player currentTrack={currentTrack} />}
     </div>
   );
 }
 
-export default PlayListsContainer;
+const mapStateToProps = (state: any) => ({
+  currentTrack: state.player.currentTrack,
+});
+
+export default connect(mapStateToProps, null)(PlayListsContainer);
