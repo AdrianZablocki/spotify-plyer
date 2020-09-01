@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { useLocation } from 'react-router';
 import Player from 'src/components/Player';
 
 import PlayListCarousel from 'src/components/PlayListCarousel';
@@ -8,6 +9,7 @@ import ITrack from 'src/interfaces/ITrack';
 
 function PlayListsContainer({ currentTrack }: { currentTrack: ITrack}): JSX.Element {
   const { isLoading, hasError, sendRequest, response } = usePlayLists();
+  const { state } = useLocation<{ id: string }>();
 
   useEffect(() => {
     sendRequest();
@@ -18,7 +20,7 @@ function PlayListsContainer({ currentTrack }: { currentTrack: ITrack}): JSX.Elem
       {isLoading && <div>spinner</div>}
       {hasError && <div>error message</div>}
       {response && <PlayListCarousel playLists={response.items} />}
-      <Player currentTrack={currentTrack} />
+      {state?.id && <Player currentTrack={currentTrack} />}
     </div>
   );
 }
