@@ -1,15 +1,15 @@
 import styled from '@emotion/styled';
 import React, { useCallback, useState } from 'react';
 import { connect } from 'react-redux';
-import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import CurrentTrack from 'src/components/CurrentTruck';
 
+import ListTrigger from 'src/components/ListTrigger';
 import Track from 'src/components/Track';
 import ITrack from 'src/interfaces/ITrack';
 import * as actions from 'src/store/actions';
 
-const currentTrackHeight = '80px';
-const listTriggerHeight = '69px';
+const currentTrackHeight = '75px';
+const listTriggerHeight = '59px';
 
 const TrackListWrapper = styled.div`
   width: 100%;
@@ -18,26 +18,6 @@ const TrackListWrapper = styled.div`
   position: absolute;
   left: 0;
   transition: all 300ms ease;
-`;
-const ListTrigger = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 20px;
-  background: #FFF;
-`;
-const NextTrack = styled.div`
-  width: 100%;
-`;
-const Label = styled.div`
-  color: #626262;
-  font-size: 10px;
-  padding-left: 20px;
-  text-transform: uppercase;
-`;
-const CurrentTruck = styled.div`
-  max-height: ${currentTrackHeight};
-  padding: 15px;
-  background: rgba(0, 0, 0, .5);
 `;
 const TrackItemsWrapper = styled.div`
   height: calc(100vh - ${currentTrackHeight});
@@ -50,24 +30,15 @@ const close = {
 const open = {
   top: 0,
 };
-const iconListStyle = {
-  width: '29px',
-  height: '29px',
-  fill: '#0FD55A',
-};
-const chevronIconStyles = {
-  width: '45px',
-  height: '45px',
-  fill: '#0FD55A',
-};
 
 interface Properties {
   tracks: ITrack[];
   chooseTrack: Function;
   nextTrack: ITrack;
+  currentTrack: ITrack;
 }
 
-function TrackListModal({ tracks, chooseTrack, nextTrack }: Properties): JSX.Element {
+function TrackListModal({ tracks, chooseTrack, nextTrack, currentTrack }: Properties): JSX.Element {
   const [isOpen, setOpen] = useState(false);
 
   const toggleTracksList = useCallback((value: boolean) => {
@@ -83,17 +54,9 @@ function TrackListModal({ tracks, chooseTrack, nextTrack }: Properties): JSX.Ele
     <TrackListWrapper style={isOpen ? open : close} data-test="section-playListItem">
       <>
         {!isOpen ? (
-          <ListTrigger onClick={() => toggleTracksList(true)}>
-            <FormatListBulletedIcon style={iconListStyle} />
-            <NextTrack>
-              <Label>Next</Label>
-              <div style={{ paddingLeft: '20px' }}>{nextTrack?.name}</div>
-            </NextTrack>
-          </ListTrigger>
+          <ListTrigger toggleList={() => toggleTracksList(true)} nextTrack={nextTrack} />
         ) : (
-          <CurrentTruck onClick={() => toggleTracksList(false)}>
-            <ChevronLeftIcon style={chevronIconStyles} />
-          </CurrentTruck>
+          <CurrentTrack toggleList={() => toggleTracksList(false)} track={currentTrack} />
         )}
         <TrackItemsWrapper>
           {tracks.map((item: any, index: number) =>
@@ -108,6 +71,7 @@ const mapStateToProps = (state: any) => ({
   tracks: state.player.tracks,
   isLoading: state.player.isLoading,
   nextTrack: state.player.nextTrack,
+  currentTrack: state.player.currentTrack,
 });
 
 const mapDispatchToProps = (dispatch: any) => ({

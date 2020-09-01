@@ -4,4 +4,5 @@ export default interface ITrack {
   href: string;
   number: number;
   id: string;
+  artist: string;
 }
