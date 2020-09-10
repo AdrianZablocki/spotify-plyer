@@ -18,12 +18,12 @@ const initialState: PlayerState = {
 };
 
 const fetchTracksStart = (state: PlayerState) => updateObject(state, { loading: true });
-
 const fetchTracksSuccess = (state: PlayerState, action: any) => updateObject(state, {
   loading: false,
   tracks: action.tracks,
+  currentTrack: action.tracks[0],
+  nextTrack: action.tracks[1],
 });
-
 const fetchTracksFail = (state: PlayerState, action: any) => updateObject(state, {
   loading: false,
   error: action.error,
@@ -46,6 +46,15 @@ const playNextTrack = (state: PlayerState) => {
     nextTrack: next || state.tracks[0],
   });
 }
+const playPrevTrack = (state: PlayerState) => {
+  const index = state.tracks.indexOf(state.currentTrack);
+  const current = index > 0 ? state.tracks[index - 1] : state.tracks[state.tracks.length - 1];
+  const next = state.currentTrack;
+  return updateObject(state, {
+    currentTrack: current,
+    nextTrack: next || state.tracks[0],
+  });
+}
 
 const reducer = (state: PlayerState = initialState, action: any) => {
   switch (action.type) {
@@ -54,6 +63,7 @@ const reducer = (state: PlayerState = initialState, action: any) => {
     case actionTypes.FETCHING_TRACKS_FAIL: return fetchTracksFail(state, action);
     case actionTypes.CHOOSE_TRACK: return chooseTrack(state, action);
     case actionTypes.PLAY_NEXT_TRACK: return playNextTrack(state);
+    case actionTypes.PLAY_PREV_TRACK: return playPrevTrack(state);
     default: return state;
   }
 };

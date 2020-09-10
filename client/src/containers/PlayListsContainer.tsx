@@ -5,9 +5,8 @@ import Player from 'src/components/Player';
 
 import PlayListCarousel from 'src/components/PlayListCarousel';
 import usePlayLists from 'src/hooks/use-playlists';
-import ITrack from 'src/interfaces/ITrack';
 
-function PlayListsContainer({ currentTrack }: { currentTrack: ITrack}): JSX.Element {
+function PlayListsContainer(): JSX.Element {
   const { isLoading, hasError, sendRequest, response } = usePlayLists();
   const { state } = useLocation<{ id: string }>();
 
@@ -20,13 +19,9 @@ function PlayListsContainer({ currentTrack }: { currentTrack: ITrack}): JSX.Elem
       {isLoading && <div>spinner</div>}
       {hasError && <div>error message</div>}
       {response && <PlayListCarousel playLists={response.items} />}
-      {state?.id && <Player currentTrack={currentTrack} />}
+      {state?.id && <Player />}
     </div>
   );
 }
 
-const mapStateToProps = (state: any) => ({
-  currentTrack: state.player.currentTrack,
-});
-
-export default connect(mapStateToProps, null)(PlayListsContainer);
+export default PlayListsContainer;

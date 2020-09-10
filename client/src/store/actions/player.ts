@@ -44,3 +44,7 @@ export const chooseTrack = (track: ITrack, index: number) => ({
 export const playNextTrack = () => ({
   type: actionTypes.PLAY_NEXT_TRACK,
 });
+
+export const playPrevTrack = () => ({
+  type: actionTypes.PLAY_PREV_TRACK,
+});

@@ -37,7 +37,7 @@ function PlayListSlide({ playlist, fetchTracks }: Properties): JSX.Element {
         alt={playlist.id}
         src={playlist.images[0].url}
         onClick={() => redirectToPlaylist(playlist.id)}
-        style={{ height: 200, width: 200, borderRadius: '50%', margin: '0 auto', display: 'block' }}
+        style={{ height: 150, width: 150, borderRadius: '50%', margin: '0 auto', display: 'block' }}
       />
       <h2>{playlist.name}</h2>
       <h3>{playlist.owner.display_name}</h3>
