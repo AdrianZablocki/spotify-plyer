@@ -59,8 +59,14 @@ function TrackListModal({ tracks, chooseTrack, nextTrack, currentTrack }: Proper
           <CurrentTrack toggleList={() => toggleTracksList(false)} track={currentTrack} />
         )}
         <TrackItemsWrapper>
-          {tracks.map((item: any, index: number) =>
-            <Track key={item.id} click={() => onChooseTrack(item, index)} item={item} index={index + 1} />)}
+          {tracks.map((item: any, index: number) => (
+            <Track
+              key={item.id}
+              click={() => onChooseTrack(item, index)}
+              item={item}
+              index={index + 1}
+            />
+          ))}
         </TrackItemsWrapper>
       </>
     </TrackListWrapper>
