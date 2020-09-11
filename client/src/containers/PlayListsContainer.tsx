@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
 import { useLocation } from 'react-router';
 import Player from 'src/components/Player';
 
