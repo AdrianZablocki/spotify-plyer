@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 import Progressbar from 'src/components/ProgressBar';
 
@@ -14,10 +14,11 @@ import RepeatButtonImage from 'src/assets/repeat_ico.svg';
 
 const PlayerWrapper = styled.div`
   position: relative;
+  padding: 0 20px;
 `;
 const Controls = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
 `;
 const NextButton = styled.span`
@@ -38,7 +39,7 @@ const ShuffleButton = styled.span`
   display: inline-block;
   width: 20px;
   height: 17px;
-  margin: 0 10px;
+  margin-right: 10px;
   background: url(${ShuffleButtonImage}) no-repeat center center;
   background-size: cover;
 `;
@@ -46,7 +47,7 @@ const RepeatButton = styled.span`
   display: inline-block;
   width: 20px;
   height: 17px;
-  margin: 0 10px;
+  margin-left: 10px;
   background: url(${RepeatButtonImage}) no-repeat center center;
   background-size: cover;
 `;
@@ -78,11 +79,12 @@ interface Properties {
 
 function Player({ currentTrack, playNext, playPrev }: Properties): JSX.Element {
   const audioElement = useRef(null);
+  const [timer, setTimer] = useState(0);
   const [playIcon, setPlayIcon] = useState(PlayActiveImage);
 
   const PlayButton = styled.span`
     display: inline-block;
-    width: 100px;
+    width: 120px;
     height: 100px;
     background: url(${playIcon}) no-repeat center center;
     background-size: cover;
@@ -98,12 +100,12 @@ function Player({ currentTrack, playNext, playPrev }: Properties): JSX.Element {
 
   const playNextHandler = useCallback(() => {
     playNext();
-    playHandler();
+    setPlayIcon(PlayActiveImage);
   }, []);
 
   const playPrevHandler = useCallback(() => {
     playPrev();
-    playHandler();
+    setPlayIcon(PlayActiveImage);
   }, []);
 
   const toggle = useCallback(() => {
@@ -115,6 +117,12 @@ function Player({ currentTrack, playNext, playPrev }: Properties): JSX.Element {
       setPlayIcon(PlayInactiveImage);
     }
   }, []);
+
+  useEffect(() => {
+    if (audioElement.current?.paused) {
+      setPlayIcon(PlayActiveImage);
+    }
+  }, [currentTrack]);
 
   return (
     <PlayerWrapper>
@@ -129,7 +137,7 @@ function Player({ currentTrack, playNext, playPrev }: Properties): JSX.Element {
         <NextButton onClick={() => playNextHandler()} />
         <RepeatButton />
       </Controls>
-      <Progressbar />
+      <Progressbar duration={currentTrack?.duration} timer={timer} />
       {/* <div>audio visualization</div> */}
       <WebAudio
         ref={audioElement}
@@ -137,6 +145,7 @@ function Player({ currentTrack, playNext, playPrev }: Properties): JSX.Element {
         src={currentTrack?.href}
         autoPlay
         onEnded={() => playNext()}
+        preload="metadata"
       />
     </PlayerWrapper>
   );
