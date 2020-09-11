@@ -38,22 +38,23 @@ const BarWrapper = styled.div`
     transform: translateY(-50%);
   }
 `;
-const Bar = styled.div`
-  position: absolute;
-  width: 30%;
-  height: 5px;
-  top: 50%;
-  left: 0;
-  background: #2A2A2A;
-  transform: translateY(-50%);
-`;
 
 function Progressbar({ duration, timer }: Properties): JSX.Element {
-  const seconds = `${timer}`;
+  const seconds = `${durationConverter(timer)}`;
+  const progressbarWidth = ((timer / 1000) / (duration / 1000)) * 100;
+  const Bar = styled.div`
+    position: absolute;
+    width: ${progressbarWidth}%;
+    height: 5px;
+    top: 50%;
+    left: 0;
+    background: #2A2A2A;
+    transform: translateY(-50%);
+  `;
 
   return (
     <ProgressbarWrapper>
-      <Time>0:{seconds.padStart(2, '0')}</Time>
+      <Time>{seconds}</Time>
       <BarWrapper>
         <Bar />
       </BarWrapper>

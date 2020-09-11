@@ -1,8 +1,9 @@
 import styled from '@emotion/styled';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
-import Progressbar from 'src/components/ProgressBar';
 
+import AudioAnalyser from 'src/components/AudioAnalyer';
+import Progressbar from 'src/components/ProgressBar';
 import ITrack from 'src/interfaces/ITrack';
 import * as actions from 'src/store/actions';
 import PlayInactiveImage from 'src/assets/Play_inactive.png';
@@ -84,7 +85,7 @@ function Player({ currentTrack, playNext, playPrev }: Properties): JSX.Element {
 
   const PlayButton = styled.span`
     display: inline-block;
-    width: 120px;
+    width: 110px;
     height: 100px;
     background: url(${playIcon}) no-repeat center center;
     background-size: cover;
@@ -128,7 +129,7 @@ function Player({ currentTrack, playNext, playPrev }: Properties): JSX.Element {
         return;
       }
       // eslint-disable-next-line no-shadow
-      setSeconds((seconds) => seconds + 1);
+      setSeconds((seconds) => seconds + 1000);
     }, 1000);
     return () => clearInterval(interval);
   }, [currentTrack]);
@@ -147,7 +148,7 @@ function Player({ currentTrack, playNext, playPrev }: Properties): JSX.Element {
         <RepeatButton />
       </Controls>
       <Progressbar duration={currentTrack?.duration} timer={seconds} />
-      {/* <div>audio visualization</div> */}
+      <AudioAnalyser />
       <WebAudio
         ref={audioElement}
         controls
