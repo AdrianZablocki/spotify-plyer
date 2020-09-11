@@ -8,8 +8,11 @@ interface Properties {
 }
 
 function Progressbar({ duration, timer }: Properties): JSX.Element {
+  const seconds = `${timer}`;
+
+  console.log(seconds.padStart(2, '0'));
   return (
-    <div>{timer} progressbar {durationConverter(duration)}</div>
+    <div>0:{seconds.padStart(2, '0')} progressbar {durationConverter(duration)}</div>
   );
 }
 export default Progressbar;

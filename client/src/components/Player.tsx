@@ -79,7 +79,7 @@ interface Properties {
 
 function Player({ currentTrack, playNext, playPrev }: Properties): JSX.Element {
   const audioElement = useRef(null);
-  const [timer, setTimer] = useState(0);
+  const [seconds, setSeconds] = useState(0);
   const [playIcon, setPlayIcon] = useState(PlayActiveImage);
 
   const PlayButton = styled.span`
@@ -122,6 +122,15 @@ function Player({ currentTrack, playNext, playPrev }: Properties): JSX.Element {
     if (audioElement.current?.paused) {
       setPlayIcon(PlayActiveImage);
     }
+    setSeconds(0);
+    const interval = setInterval(() => {
+      if (audioElement.current?.paused) {
+        return;
+      }
+      // eslint-disable-next-line no-shadow
+      setSeconds((seconds) => seconds + 1);
+    }, 1000);
+    return () => clearInterval(interval);
   }, [currentTrack]);
 
   return (
@@ -137,7 +146,7 @@ function Player({ currentTrack, playNext, playPrev }: Properties): JSX.Element {
         <NextButton onClick={() => playNextHandler()} />
         <RepeatButton />
       </Controls>
-      <Progressbar duration={currentTrack?.duration} timer={timer} />
+      <Progressbar duration={currentTrack?.duration} timer={seconds} />
       {/* <div>audio visualization</div> */}
       <WebAudio
         ref={audioElement}
