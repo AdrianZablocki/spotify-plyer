@@ -12,6 +12,7 @@ const ProgressbarWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding-bottom: 10px;
 `;
 const Time = styled.span`
   font-size: 10px;
@@ -43,7 +44,7 @@ const Bar = styled.div`
   height: 5px;
   top: 50%;
   left: 0;
-  background: #626262;
+  background: #2A2A2A;
   transform: translateY(-50%);
 `;
 

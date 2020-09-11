@@ -14,7 +14,7 @@ import RepeatButtonImage from 'src/assets/repeat_ico.svg';
 
 const PlayerWrapper = styled.div`
   position: relative;
-  padding: 0 20px;
+  padding: 0 20px 70px;
 `;
 const Controls = styled.div`
   display: flex;
