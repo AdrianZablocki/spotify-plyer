@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
 import AudioAnalyser from 'src/components/AudioAnalyer';
@@ -66,11 +66,6 @@ const Artist = styled.div`
   color: #626262;
   text-transform: uppercase;
 `;
-const WebAudio = styled.audio`
-  position: absolute;
-  opacity: 0;
-  visibility: hidden;
-`;
 
 interface Properties {
   currentTrack: ITrack;
@@ -79,7 +74,6 @@ interface Properties {
 }
 
 function Player({ currentTrack, playNext, playPrev }: Properties): JSX.Element {
-  const audioElement = useRef(null);
   const [seconds, setSeconds] = useState(0);
   const [playIcon, setPlayIcon] = useState(PlayActiveImage);
 
@@ -91,13 +85,12 @@ function Player({ currentTrack, playNext, playPrev }: Properties): JSX.Element {
     background-size: cover;
   `;
 
-  const playHandler = useCallback(() => {
-    audioElement.current.play();
-  }, []);
-
-  const pauseHandler = useCallback(() => {
-    audioElement.current.pause();
-  }, []);
+  const [audio, setAudio] = useState(new Audio(currentTrack?.href));
+  audio.crossOrigin = 'anonymous';
+  const playPromise: Promise<any> = audio.play();
+  audio.addEventListener('ended', (e) => {
+    playNext();
+  });
 
   const playNextHandler = useCallback(() => {
     playNext();
@@ -109,29 +102,46 @@ function Player({ currentTrack, playNext, playPrev }: Properties): JSX.Element {
     setPlayIcon(PlayActiveImage);
   }, []);
 
-  const toggle = useCallback(() => {
-    if (audioElement.current?.paused) {
-      playHandler();
-      setPlayIcon(PlayActiveImage);
-    } else {
-      pauseHandler();
-      setPlayIcon(PlayInactiveImage);
-    }
-  }, []);
+  const [playing, setPlaying] = useState(true);
+
+  const toggle = () => {
+    setPlaying(!playing);
+    // eslint-disable-next-line no-unused-expressions
+    playing ? setPlayIcon(PlayInactiveImage) : setPlayIcon(PlayActiveImage);
+  }
 
   useEffect(() => {
-    if (audioElement.current?.paused) {
-      setPlayIcon(PlayActiveImage);
-    }
+    console.log('playing', playing)
+    // eslint-disable-next-line no-unused-expressions
+    playing ? audio.play() : audio.pause();
+  }, [playing]);
+
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     if (!playing) {
+  //       return;
+  //     }
+  //     // eslint-disable-next-line no-shadow
+  //     setSeconds((seconds) => seconds + 1000);
+  //   }, 1000);
+  //   return () => clearInterval(interval);
+  // }, [playing])
+
+  useEffect(() => {
+    playPromise.then(() => audio.pause())
+    setAudio(new Audio(currentTrack?.href));
+    setPlaying(true);
+    setPlayIcon(PlayActiveImage);
     setSeconds(0);
-    const interval = setInterval(() => {
-      if (audioElement.current?.paused) {
-        return;
-      }
-      // eslint-disable-next-line no-shadow
-      setSeconds((seconds) => seconds + 1000);
-    }, 1000);
-    return () => clearInterval(interval);
+
+    // const interval = setInterval(() => {
+    //   if (audioElement.current?.paused) {
+    //     return;
+    //   }
+    //   // eslint-disable-next-line no-shadow
+    //   setSeconds((seconds) => seconds + 1000);
+    // }, 1000);
+    // return () => clearInterval(interval);
   }, [currentTrack]);
 
   return (
@@ -149,14 +159,6 @@ function Player({ currentTrack, playNext, playPrev }: Properties): JSX.Element {
       </Controls>
       <Progressbar duration={currentTrack?.duration} timer={seconds} />
       <AudioAnalyser />
-      <WebAudio
-        ref={audioElement}
-        controls
-        src={currentTrack?.href}
-        autoPlay
-        onEnded={() => playNext()}
-        preload="metadata"
-      />
     </PlayerWrapper>
   );
 }
