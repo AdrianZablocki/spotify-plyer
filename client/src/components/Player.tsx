@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import AudioAnalyser from 'src/components/AudioAnalyer';
 import Progressbar from 'src/components/ProgressBar';
+import UseAudio from 'src/hooks/use-audio';
 import ITrack from 'src/interfaces/ITrack';
 import * as actions from 'src/store/actions';
 import PlayInactiveImage from 'src/assets/Play_inactive.png';
@@ -76,6 +77,7 @@ interface Properties {
 function Player({ currentTrack, playNext, playPrev }: Properties): JSX.Element {
   const [seconds, setSeconds] = useState(0);
   const [playIcon, setPlayIcon] = useState(PlayActiveImage);
+  const { audio, audioToggle } = UseAudio({ currentTrack, playNext });
 
   const PlayButton = styled.span`
     display: inline-block;
@@ -84,13 +86,6 @@ function Player({ currentTrack, playNext, playPrev }: Properties): JSX.Element {
     background: url(${playIcon}) no-repeat center center;
     background-size: cover;
   `;
-
-  const [audio, setAudio] = useState(new Audio(currentTrack?.href));
-  audio.crossOrigin = 'anonymous';
-  const playPromise: Promise<any> = audio.play();
-  audio.addEventListener('ended', (e) => {
-    playNext();
-  });
 
   const playNextHandler = useCallback(() => {
     playNext();
@@ -102,48 +97,6 @@ function Player({ currentTrack, playNext, playPrev }: Properties): JSX.Element {
     setPlayIcon(PlayActiveImage);
   }, []);
 
-  const [playing, setPlaying] = useState(true);
-
-  const toggle = () => {
-    setPlaying(!playing);
-    // eslint-disable-next-line no-unused-expressions
-    playing ? setPlayIcon(PlayInactiveImage) : setPlayIcon(PlayActiveImage);
-  }
-
-  useEffect(() => {
-    console.log('playing', playing)
-    // eslint-disable-next-line no-unused-expressions
-    playing ? audio.play() : audio.pause();
-  }, [playing]);
-
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     if (!playing) {
-  //       return;
-  //     }
-  //     // eslint-disable-next-line no-shadow
-  //     setSeconds((seconds) => seconds + 1000);
-  //   }, 1000);
-  //   return () => clearInterval(interval);
-  // }, [playing])
-
-  useEffect(() => {
-    playPromise.then(() => audio.pause())
-    setAudio(new Audio(currentTrack?.href));
-    setPlaying(true);
-    setPlayIcon(PlayActiveImage);
-    setSeconds(0);
-
-    // const interval = setInterval(() => {
-    //   if (audioElement.current?.paused) {
-    //     return;
-    //   }
-    //   // eslint-disable-next-line no-shadow
-    //   setSeconds((seconds) => seconds + 1000);
-    // }, 1000);
-    // return () => clearInterval(interval);
-  }, [currentTrack]);
-
   return (
     <PlayerWrapper>
       <Details>
@@ -153,11 +106,11 @@ function Player({ currentTrack, playNext, playPrev }: Properties): JSX.Element {
       <Controls>
         <ShuffleButton />
         <PrevButton onClick={() => playPrevHandler()} />
-        <PlayButton onClick={() => toggle()} />
+        <PlayButton onClick={() => audioToggle()} />
         <NextButton onClick={() => playNextHandler()} />
         <RepeatButton />
       </Controls>
-      <Progressbar duration={currentTrack?.duration} timer={seconds} />
+      <Progressbar duration={currentTrack?.duration} timer={seconds} audio={audio} />
       <AudioAnalyser />
     </PlayerWrapper>
   );

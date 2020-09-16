@@ -1,11 +1,12 @@
 import styled from '@emotion/styled';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import durationConverter from 'src/utility/duration-converter';
 
 interface Properties {
   duration: number;
   timer: number;
+  audio: HTMLAudioElement;
 }
 
 const ProgressbarWrapper = styled.div`
@@ -39,7 +40,7 @@ const BarWrapper = styled.div`
   }
 `;
 
-function Progressbar({ duration, timer }: Properties): JSX.Element {
+function Progressbar({ duration, timer, audio }: Properties): JSX.Element {
   const seconds = `${durationConverter(timer)}`;
   const progressbarWidth = ((timer / 1000) / (duration / 1000)) * 100;
   const Bar = styled.div`
@@ -51,6 +52,14 @@ function Progressbar({ duration, timer }: Properties): JSX.Element {
     background: #2A2A2A;
     transform: translateY(-50%);
   `;
+  const [test, setTest] = useState(audio.currentTime)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTest(audio.currentTime)
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [audio]);
 
   return (
     <ProgressbarWrapper>
@@ -58,7 +67,8 @@ function Progressbar({ duration, timer }: Properties): JSX.Element {
       <BarWrapper>
         <Bar />
       </BarWrapper>
-      <Time>{durationConverter(duration)}</Time>
+      <Time>{durationConverter(timer)}</Time>
+      {/*<div>{test.toFixed(0)}</div>*/}
     </ProgressbarWrapper>
   );
 }
