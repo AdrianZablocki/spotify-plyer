@@ -40,7 +40,7 @@ const BarWrapper = styled.div`
 `;
 
 function Progressbar({ duration, audio }: Properties): JSX.Element {
-  const [currentTime, setCurrentTime] = useState(audio.currentTime)
+  const [currentTime, setCurrentTime] = useState<number>(Math.round(audio.currentTime))
   const progressbarWidth = ((currentTime) / (duration / 1000)) * 100;
   const Bar = styled.div`
     position: absolute;
@@ -57,7 +57,7 @@ function Progressbar({ duration, audio }: Properties): JSX.Element {
       if (audio.paused) {
         return;
       }
-      setCurrentTime(audio.currentTime)
+      setCurrentTime(Math.round(audio.currentTime));
     }, 1000);
     return () => clearInterval(interval);
   }, [audio]);

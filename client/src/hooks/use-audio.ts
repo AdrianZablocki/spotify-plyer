@@ -46,6 +46,10 @@ function UseAudio({ currentTrack, playNext }: Properties): UseAudio {
     return () => audio.removeEventListener('ended', () => playNext());
   }, []);
 
+  useEffect(() => {
+    setIsPlaying(true);
+  }, [currentTrack])
+
   return {
     audio,
     audioToggle: toggle,
