@@ -1,10 +1,17 @@
+import styled from '@emotion/styled';
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
 import { useLocation } from 'react-router';
 import Player from 'src/components/Player';
 
 import PlayListCarousel from 'src/components/PlayListCarousel';
 import usePlayLists from 'src/hooks/use-playlists';
+
+const PlayListWrapper = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
 
 function PlayListsContainer(): JSX.Element {
   const { isLoading, hasError, sendRequest, response } = usePlayLists();
@@ -15,12 +22,12 @@ function PlayListsContainer(): JSX.Element {
   }, []);
 
   return (
-    <div data-test="section-playlists">
+    <PlayListWrapper data-test="section-playlists">
       {isLoading && <div>spinner</div>}
       {hasError && <div>error message</div>}
       {response && <PlayListCarousel playLists={response.items} />}
       {state?.id && <Player />}
-    </div>
+    </PlayListWrapper>
   );
 }
 

@@ -27,6 +27,7 @@ module.exports = {
     'jsx-a11y/media-has-caption': 0,
     semi: 0,
     camelcase: 0,
+    'no-unused-expressions': 0,
     'linebreak-style': ['error', 'windows'], // when working on windows machine
   },
 };

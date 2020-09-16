@@ -1,8 +1,10 @@
 import styled from '@emotion/styled';
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback } from 'react';
 import { connect } from 'react-redux';
-import Progressbar from 'src/components/ProgressBar';
 
+import AudioAnalyser from 'src/components/AudioAnalyer';
+import Progressbar from 'src/components/ProgressBar';
+import UseAudio from 'src/hooks/use-audio';
 import ITrack from 'src/interfaces/ITrack';
 import * as actions from 'src/store/actions';
 import PlayInactiveImage from 'src/assets/Play_inactive.png';
@@ -14,10 +16,11 @@ import RepeatButtonImage from 'src/assets/repeat_ico.svg';
 
 const PlayerWrapper = styled.div`
   position: relative;
+  padding: 0 20px 70px;
 `;
 const Controls = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
 `;
 const NextButton = styled.span`
@@ -38,7 +41,7 @@ const ShuffleButton = styled.span`
   display: inline-block;
   width: 20px;
   height: 17px;
-  margin: 0 10px;
+  margin-right: 10px;
   background: url(${ShuffleButtonImage}) no-repeat center center;
   background-size: cover;
 `;
@@ -46,7 +49,7 @@ const RepeatButton = styled.span`
   display: inline-block;
   width: 20px;
   height: 17px;
-  margin: 0 10px;
+  margin-left: 10px;
   background: url(${RepeatButtonImage}) no-repeat center center;
   background-size: cover;
 `;
@@ -64,11 +67,6 @@ const Artist = styled.div`
   color: #626262;
   text-transform: uppercase;
 `;
-const WebAudio = styled.audio`
-  position: absolute;
-  opacity: 0;
-  visibility: hidden;
-`;
 
 interface Properties {
   currentTrack: ITrack;
@@ -77,44 +75,16 @@ interface Properties {
 }
 
 function Player({ currentTrack, playNext, playPrev }: Properties): JSX.Element {
-  const audioElement = useRef(null);
-  const [playIcon, setPlayIcon] = useState(PlayActiveImage);
-
+  const { audio, audioToggle, isAudioPlaying } = UseAudio({ currentTrack, playNext });
+  const playNextHandler = useCallback(() => playNext(), []);
+  const playPrevHandler = useCallback(() => playPrev(), []);
   const PlayButton = styled.span`
     display: inline-block;
-    width: 100px;
+    width: 110px;
     height: 100px;
-    background: url(${playIcon}) no-repeat center center;
+    background: url(${isAudioPlaying ? PlayActiveImage : PlayInactiveImage}) no-repeat center center;
     background-size: cover;
   `;
-
-  const playHandler = useCallback(() => {
-    audioElement.current.play();
-  }, []);
-
-  const pauseHandler = useCallback(() => {
-    audioElement.current.pause();
-  }, []);
-
-  const playNextHandler = useCallback(() => {
-    playNext();
-    playHandler();
-  }, []);
-
-  const playPrevHandler = useCallback(() => {
-    playPrev();
-    playHandler();
-  }, []);
-
-  const toggle = useCallback(() => {
-    if (audioElement.current?.paused) {
-      playHandler();
-      setPlayIcon(PlayActiveImage);
-    } else {
-      pauseHandler();
-      setPlayIcon(PlayInactiveImage);
-    }
-  }, []);
 
   return (
     <PlayerWrapper>
@@ -125,19 +95,12 @@ function Player({ currentTrack, playNext, playPrev }: Properties): JSX.Element {
       <Controls>
         <ShuffleButton />
         <PrevButton onClick={() => playPrevHandler()} />
-        <PlayButton onClick={() => toggle()} />
+        <PlayButton onClick={() => audioToggle()} />
         <NextButton onClick={() => playNextHandler()} />
         <RepeatButton />
       </Controls>
-      <Progressbar />
-      {/* <div>audio visualization</div> */}
-      <WebAudio
-        ref={audioElement}
-        controls
-        src={currentTrack?.href}
-        autoPlay
-        onEnded={() => playNext()}
-      />
+      <Progressbar duration={currentTrack?.duration} audio={audio} />
+      <AudioAnalyser />
     </PlayerWrapper>
   );
 }
