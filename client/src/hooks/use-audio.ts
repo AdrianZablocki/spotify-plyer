@@ -3,8 +3,9 @@ import { useEffect, useState } from 'react';
 import ITrack from 'src/interfaces/ITrack';
 
 interface UseAudio {
-  audioToggle: () => void;
   audio: HTMLAudioElement;
+  audioToggle: () => void;
+  isAudioPlaying: boolean;
 }
 
 interface Properties {
@@ -14,7 +15,7 @@ interface Properties {
 
 function UseAudio({ currentTrack, playNext }: Properties): UseAudio {
   const [audio] = useState(new Audio());
-  const [playing, setPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(true);
   const [durationTime, setDurationTime] = useState(0);
 
   audio.crossOrigin = 'anonymous';
@@ -23,10 +24,10 @@ function UseAudio({ currentTrack, playNext }: Properties): UseAudio {
   const playPromise: Promise<any> = audio.play();
 
   const toggle = () => {
-    if (playing) {
+    if (isPlaying) {
       setDurationTime(audio.currentTime);
     }
-    setPlaying(!playing);
+    setIsPlaying(!isPlaying);
   }
 
   const play = () => {
@@ -38,26 +39,17 @@ function UseAudio({ currentTrack, playNext }: Properties): UseAudio {
     playPromise.then(() => audio.pause())
   }
 
-  useEffect(() => {
-    playing ? play() : pause();
-  }, [playing, durationTime]);
+  useEffect(() => (isPlaying ? play() : pause()), [isPlaying, durationTime]);
 
   useEffect(() => {
-    audio.addEventListener('ended', () => {
-      // setPlaying(false);
-      playNext();
-    });
-    return () => {
-      audio.removeEventListener('ended', () => {
-        // setPlaying(false);
-        playNext();
-      });
-    };
+    audio.addEventListener('ended', () => playNext());
+    return () => audio.removeEventListener('ended', () => playNext());
   }, []);
 
   return {
-    audioToggle: toggle,
     audio,
+    audioToggle: toggle,
+    isAudioPlaying: isPlaying,
   }
 }
 

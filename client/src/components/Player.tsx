@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback } from 'react';
 import { connect } from 'react-redux';
 
 import AudioAnalyser from 'src/components/AudioAnalyer';
@@ -75,27 +75,16 @@ interface Properties {
 }
 
 function Player({ currentTrack, playNext, playPrev }: Properties): JSX.Element {
-  const [seconds, setSeconds] = useState(0);
-  const [playIcon, setPlayIcon] = useState(PlayActiveImage);
-  const { audio, audioToggle } = UseAudio({ currentTrack, playNext });
-
+  const { audio, audioToggle, isAudioPlaying } = UseAudio({ currentTrack, playNext });
+  const playNextHandler = useCallback(() => playNext(), []);
+  const playPrevHandler = useCallback(() => playPrev(), []);
   const PlayButton = styled.span`
     display: inline-block;
     width: 110px;
     height: 100px;
-    background: url(${playIcon}) no-repeat center center;
+    background: url(${isAudioPlaying ? PlayActiveImage : PlayInactiveImage}) no-repeat center center;
     background-size: cover;
   `;
-
-  const playNextHandler = useCallback(() => {
-    playNext();
-    setPlayIcon(PlayActiveImage);
-  }, []);
-
-  const playPrevHandler = useCallback(() => {
-    playPrev();
-    setPlayIcon(PlayActiveImage);
-  }, []);
 
   return (
     <PlayerWrapper>
@@ -110,7 +99,7 @@ function Player({ currentTrack, playNext, playPrev }: Properties): JSX.Element {
         <NextButton onClick={() => playNextHandler()} />
         <RepeatButton />
       </Controls>
-      <Progressbar duration={currentTrack?.duration} timer={seconds} audio={audio} />
+      <Progressbar duration={currentTrack?.duration} audio={audio} />
       <AudioAnalyser />
     </PlayerWrapper>
   );

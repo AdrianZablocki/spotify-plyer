@@ -5,7 +5,6 @@ import durationConverter from 'src/utility/duration-converter';
 
 interface Properties {
   duration: number;
-  timer: number;
   audio: HTMLAudioElement;
 }
 
@@ -40,9 +39,9 @@ const BarWrapper = styled.div`
   }
 `;
 
-function Progressbar({ duration, timer, audio }: Properties): JSX.Element {
-  const seconds = `${durationConverter(timer)}`;
-  const progressbarWidth = ((timer / 1000) / (duration / 1000)) * 100;
+function Progressbar({ duration, audio }: Properties): JSX.Element {
+  const [currentTime, setCurrentTime] = useState(audio.currentTime)
+  const progressbarWidth = ((currentTime) / (duration / 1000)) * 100;
   const Bar = styled.div`
     position: absolute;
     width: ${progressbarWidth}%;
@@ -52,23 +51,24 @@ function Progressbar({ duration, timer, audio }: Properties): JSX.Element {
     background: #2A2A2A;
     transform: translateY(-50%);
   `;
-  const [test, setTest] = useState(audio.currentTime)
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setTest(audio.currentTime)
+      if (audio.paused) {
+        return;
+      }
+      setCurrentTime(audio.currentTime)
     }, 1000);
     return () => clearInterval(interval);
   }, [audio]);
 
   return (
     <ProgressbarWrapper>
-      <Time>{seconds}</Time>
+      <Time>{durationConverter(currentTime * 1000)}</Time>
       <BarWrapper>
         <Bar />
       </BarWrapper>
-      <Time>{durationConverter(timer)}</Time>
-      {/*<div>{test.toFixed(0)}</div>*/}
+      <Time>{durationConverter(duration)}</Time>
     </ProgressbarWrapper>
   );
 }
