@@ -7,12 +7,28 @@ import { connect } from 'react-redux';
 import HttpContext from 'src/contexts/HttpContext';
 import * as actions from 'src/store/actions';
 
+const SlideWrapper = styled.div`
+  min-height: 280px;
+`;
 const Image = styled.img`
-  height: 350px;
-  width: 350px;
   border-radius: 50%;
   margin: 0 auto;
   display: block;
+`;
+const PlaylistName = styled.div`
+  margin-bottom: 25px;
+  font-size: 14px;
+  color: #FFF;
+  text-align: center;
+`;
+const AdditionalInfo = styled.div`
+  margin-bottom: 5px;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  color: #626262;
+  text-align: center;
+  text-transform: uppercase;
 `;
 
 interface Properties {
@@ -32,16 +48,15 @@ function PlayListSlide({ playlist, fetchTracks }: Properties): JSX.Element {
   }, [history]);
 
   return (
-    <>
+    <SlideWrapper onClick={() => redirectToPlaylist(playlist.id)}>
+      <AdditionalInfo>{playlist.type}</AdditionalInfo>
+      <PlaylistName>{playlist.name}</PlaylistName>
       <Image
         alt={playlist.id}
         src={playlist.images[0].url}
-        onClick={() => redirectToPlaylist(playlist.id)}
-        style={{ height: 150, width: 150, borderRadius: '50%', margin: '0 auto', display: 'block' }}
+        style={{ height: 210, width: 210 }}
       />
-      <h2>{playlist.name}</h2>
-      <h3>{playlist.owner.display_name}</h3>
-    </>
+    </SlideWrapper>
   );
 }
 const mapDispatchToProps = (dispatch: any) => ({

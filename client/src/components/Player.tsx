@@ -2,7 +2,6 @@ import styled from '@emotion/styled';
 import React, { useCallback } from 'react';
 import { connect } from 'react-redux';
 
-import AudioAnalyser from 'src/components/AudioAnalyer';
 import Progressbar from 'src/components/ProgressBar';
 import UseAudio from 'src/hooks/use-audio';
 import ITrack from 'src/interfaces/ITrack';
@@ -100,7 +99,6 @@ function Player({ currentTrack, playNext, playPrev }: Properties): JSX.Element {
         <RepeatButton />
       </Controls>
       <Progressbar duration={currentTrack?.duration} audio={audio} />
-      <AudioAnalyser />
     </PlayerWrapper>
   );
 }

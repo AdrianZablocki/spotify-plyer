@@ -18,4 +18,15 @@ export default css`
   *:after {
     box-sizing: inherit;
   }
+  
+  /* overwrite carousel styles */
+  .slider,
+  .slide-current,
+  .slider-frame,
+  .slider-control-centerright button,
+  .slider-control-centerleft button {
+    &:focus {
+      outline: none;
+    }
+  } 
 `;

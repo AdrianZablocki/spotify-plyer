@@ -12,7 +12,7 @@ const CurrentTruckWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 15px;
-  background: rgba(0, 0, 0, .5);
+  background: #000;
 `;
 const DetailsWrapper = styled.div`
   display: flex;
@@ -31,6 +31,7 @@ const ArtistName = styled.div`
 const Details = styled.div`
   margin-left: 30px;
 `;
+
 const chevronIconStyles = {
   width: '45px',
   height: '45px',
