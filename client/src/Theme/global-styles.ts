@@ -1,7 +1,6 @@
 import { css } from '@emotion/core';
 
 const fontFamily = '\'Open Sans\', Arial, -apple-system, Roboto, \'Apple Color Emoji\', \'Segoe UI Emoji\', \'Segoe UI Symbol\', sans-serif';
-const border = '4px solid #626262';
 
 export default css`
   html {
