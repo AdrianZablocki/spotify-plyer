@@ -16,7 +16,8 @@ var cookieParser = require('cookie-parser');
 var client_id = 'a2044475b55c41c69cf5500de18a226c'; // Your client id
 var client_secret = '20f6776ab70e4250a85715018df6efa5'; // Your secret
 var redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
-
+require('dotenv').config();
+console.log(process.env.PUBLIC_URL);
 /**
  * Generates a random string containing numbers and letters
  * @param  {number} length The length of the string
@@ -104,7 +105,7 @@ app.get('/callback', function (req, res) {
                 });
 
                 // we can also pass the token to the browser to make requests from there
-                res.redirect('http://localhost:3010/account/#' +
+                res.redirect('https://spotifyplayer.z16.web.core.windows.net/account/#' +
                     querystring.stringify({
                         access_token: access_token,
                         refresh_token: refresh_token
