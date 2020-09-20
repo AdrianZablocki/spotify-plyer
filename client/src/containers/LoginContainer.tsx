@@ -31,7 +31,7 @@ function LoginContainer(): JSX.Element {
     <LoginContainerWrapper>
       <Header>Spotify player</Header>
       <Subheader>Spotify player</Subheader>
-      <ButtonPrimary content="Login" href="http://localhost:8888" />
+      <ButtonPrimary content="Login" href="https://mighty-sands-44998.herokuapp.com/" />
     </LoginContainerWrapper>
   );
 }
