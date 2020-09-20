@@ -5,6 +5,8 @@
   "scripts": {
     "start": "webpack-dev-server -r dotenv/config --port 3010 --config webpack/webpack.development.js --open --history-api-fallback",
     "build": "npx rimraf ./build && webpack -r dotenv/config --display-error-details --config webpack/webpack.production.js",
+    "generate-typings": "tsc",
+    "prepublishOnly": "npm run generate-typings && npm run build",
     "test": "jest --coverage --updateSnapshot --json --outputFile=./reports/unit-test-report.json --passWithNoTests",
     "test:watch": "jest --watch --runInBand",
     "eslint": "eslint --ignore-path .gitignore ./ --ext .js,.ts,.tsx",
